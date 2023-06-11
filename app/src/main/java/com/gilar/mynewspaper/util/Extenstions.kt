@@ -1,12 +1,9 @@
 package com.gilar.mynewspaper.util
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gilar.mynewspaper.R
@@ -28,43 +25,6 @@ fun View.hide() {
 
 fun View.show() {
     this.visibility = View.VISIBLE
-}
-
-fun View.slideDown() {
-    this.animate()
-        .translationY(this.height.toFloat())
-        .alpha(0f)
-        .setListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationEnd(animation: Animator) {
-                this@slideDown.visibility = View.GONE
-                this@slideDown.isVisible = false
-            }
-        })
-}
-
-fun View.slideUp() {
-    this.visibility = View.VISIBLE
-    this.alpha = 0f
-    if (this.height > 0) {
-        slideUpNow(this)
-    } else {
-        // wait till height is measured
-        this.post { slideUpNow(this) }
-    }
-}
-
-private fun slideUpNow(view: View) {
-    view.translationY = view.height.toFloat()
-    view.animate()
-        .translationY(0f)
-        .alpha(1f)
-        .setListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationEnd(animation: Animator) {
-                view.visibility = View.VISIBLE
-                view.isVisible = true
-                view.alpha = 1f
-            }
-        })
 }
 
 fun View.showKeyboard() {

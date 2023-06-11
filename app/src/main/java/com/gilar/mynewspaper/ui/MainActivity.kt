@@ -1,13 +1,9 @@
 package com.gilar.mynewspaper.ui
 
 import am.appwise.components.ni.NoInternetDialog
-import android.app.ActivityOptions
-import android.content.Intent
 import android.os.Bundle
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.GestureDetectorCompat
-import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.gilar.mynewspaper.R
@@ -15,10 +11,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.gilar.mynewspaper.database.ArticleDatabase
 import com.gilar.mynewspaper.repository.NewsRepository
 import com.gilar.mynewspaper.util.setOnItemReselectedListener
-import com.gilar.mynewspaper.util.slideDown
-import com.gilar.mynewspaper.util.slideUp
-import com.gilar.mynewspaper.util.swipeDetector.SwipeActions
-import com.gilar.mynewspaper.util.swipeDetector.SwipeGestureDetector
 import github.com.st235.lib_expandablebottombar.navigation.ExpandableBottomBarNavigationUI
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -43,8 +35,6 @@ class MainActivity : AppCompatActivity() {
         val viewModelProviderFactory = NewsViewModelProviderFactory(newsRepository)
         viewModel = ViewModelProvider(this, viewModelProviderFactory).get(NewsViewModel::class.java)
 
-        detectSwipeGestures()
-
         noInternetDialog = noInternetAlert()
 
         val navController = findNavController(R.id.nav_host_fragment)
@@ -57,38 +47,6 @@ class MainActivity : AppCompatActivity() {
             navController.navigate(menuItem.itemId)
         }
 
-    }
-
-    private fun detectSwipeGestures() {
-        val swipeGestureDetector = SwipeGestureDetector(object : SwipeActions {
-            override fun onSwipeLeft() {}
-
-            override fun onSwipeUp() {
-                if (bottom_bar.isVisible) bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-                else bottom_bar.slideUp()
-            }
-
-            override fun onSwipeDown() {
-                bottom_bar.slideDown()
-            }
-        })
-
-        val gestureDetectorCompat = GestureDetectorCompat(applicationContext, swipeGestureDetector)
-        btn_swipe_up.setOnTouchListener { view, motionEvent ->
-            gestureDetectorCompat.onTouchEvent(motionEvent)
-            view.performClick()
-            true
-        }
-    }
-
-    private fun restartActivity() {
-        val options = ActivityOptions.makeCustomAnimation(
-            this,
-            android.R.anim.fade_in,
-            android.R.anim.fade_out
-        )
-        startActivity(Intent(applicationContext, MainActivity::class.java), options.toBundle())
-        finish()
     }
 
     private fun noInternetAlert() = NoInternetDialog.Builder(this)

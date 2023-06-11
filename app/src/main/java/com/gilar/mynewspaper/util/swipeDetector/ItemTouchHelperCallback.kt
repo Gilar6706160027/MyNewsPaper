@@ -3,7 +3,6 @@ package com.gilar.mynewspaper.util.swipeDetector
 import android.graphics.Canvas
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.gilar.mynewspaper.R
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 class ItemTouchHelperCallback(private val swipeActions: RecyclerViewSwipe) :
@@ -23,9 +22,6 @@ class ItemTouchHelperCallback(private val swipeActions: RecyclerViewSwipe) :
         when (direction) {
             ItemTouchHelper.LEFT -> {
                 swipeActions.onSwipeLeft(viewHolder)
-            }
-            ItemTouchHelper.RIGHT -> {
-                swipeActions.onSwipeRight(viewHolder)
             }
         }
     }
@@ -51,11 +47,7 @@ class ItemTouchHelperCallback(private val swipeActions: RecyclerViewSwipe) :
             swipeActions.addSwipeLeftBackgroundColor()
         ).addSwipeLeftActionIcon(
                 swipeActions.addSwipeLeftActionIcon()
-        ).addSwipeRightBackgroundColor(
-                swipeActions.addSwipeRightBackgroundColor()
-        ).addSwipeRightActionIcon(R.drawable.ic_share_2)
-            .create()
-            .decorate()
+        ).create().decorate()
         super.onChildDraw(
             c,
             recyclerView,

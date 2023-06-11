@@ -20,16 +20,6 @@
         app:navGraph="@navigation/bottom_nav_graph"
         tools:layout="@layout/search_fragment" />
 
-    <ImageButton
-        android:id="@+id/btn_swipe_up"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/transparent"
-        android:paddingBottom="20dp"
-        android:src="@drawable/expnadable_bar"
-        app:layout_anchor="@id/bottom_bar"
-        app:layout_anchorGravity="top" />
-
     <github.com.st235.lib_expandablebottombar.ExpandableBottomBar
         android:id="@+id/bottom_bar"
         android:layout_width="wrap_content"

@@ -2,19 +2,18 @@ package com.gilar.mynewspaper.ui.fragments
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.addCallback
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import com.gilar.mynewspaper.R
 import com.gilar.mynewspaper.adapters.SavedRecAdapter
 import com.gilar.mynewspaper.model.Article
 import com.gilar.mynewspaper.util.*
 import com.gilar.mynewspaper.util.swipeDetector.ItemTouchHelperCallback
 import com.gilar.mynewspaper.util.swipeDetector.RecyclerViewSwipe
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.saved_fragment.*
 
 
@@ -27,13 +26,6 @@ class SavedFragment : BaseFragment(R.layout.saved_fragment) {
 
         setUpRecyclerView()
         observeTopBarState()
-
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            when (viewModel.savedTopBarState.value) {
-                is TopBarState.SelectionState -> clearSelection()
-                else -> findNavController().popBackStack()
-            }
-        }
 
         viewModel.savedNewsLiveData.observe(viewLifecycleOwner, Observer {
             if (it.isEmpty()) {
@@ -107,15 +99,7 @@ class SavedFragment : BaseFragment(R.layout.saved_fragment) {
                 deleteArticle(currentArticle)
             }
 
-            override fun onSwipeRight(viewHolder: RecyclerView.ViewHolder) {
-                val position = viewHolder.adapterPosition
-                val currentArticle = savedAdapter.savedDiffer.currentList[position]
-                savedAdapter.notifyDataSetChanged()
-            }
-
             override fun addSwipeLeftBackgroundColor(): Int = requireContext().getColor(R.color.red_400)
-
-            override fun addSwipeRightBackgroundColor(): Int = requireContext().getColor(R.color.transparent)
 
             override fun addSwipeLeftActionIcon(): Int = R.drawable.ic_trash_2_white
         })
@@ -137,5 +121,4 @@ class SavedFragment : BaseFragment(R.layout.saved_fragment) {
         }
         savedAdapter.notifyDataSetChanged()
     }
-
 }

@@ -234,13 +234,7 @@ class SearchFragment : BaseFragment(R.layout.search_fragment) {
             adapter.notifyDataSetChanged()
         }
 
-        override fun onSwipeRight(viewHolder: RecyclerView.ViewHolder) {
-            adapter.notifyDataSetChanged()
-        }
-
         override fun addSwipeLeftBackgroundColor(): Int = requireContext().getColor(R.color.light_blue)
-
-        override fun addSwipeRightBackgroundColor(): Int = requireContext().getColor(R.color.transparent)
 
         override fun addSwipeLeftActionIcon(): Int = R.drawable.ic_baseline_bookmark_border_24
 
